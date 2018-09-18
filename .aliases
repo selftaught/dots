@@ -1,0 +1,158 @@
+#!/usr/bin/env zsh
+
+# -----------------------------------
+# Easier navigation
+# -----------------------------------
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+
+# -----------------------------------
+# Misc
+# -----------------------------------
+alias h="history"
+alias rtfm='man'
+alias reload="exec $SHELL -l"
+alias urldecode='python -c "import sys, urllib as ul; print ul.unquote_plus(sys.argv[1])"'
+alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
+alias showinc='perl -e "use Data::Dumper; print Dumper(\@INC);"'
+alias mkdur='mkdir'
+alias map="xargs -n1"
+alias week='date +%V'
+
+# -----------------------------------
+# Process / services
+# ----------------------------------
+alias j='jobs'
+alias ht='htop'
+alias s='screen'
+alias sls='screen -ls'
+
+# -----------------------------------
+# File searching
+# -----------------------------------
+alias findf='find . -type f'
+alias findfn='find . -type f -name'
+alias findpm='find . -type f -name "*.pm" 2>/dev/null'
+alias findd='find . -type d'
+alias finddn='find . -type d -name'
+alias findswp='find . -maxdepth 5 -type f -name "*.swp"'
+alias fgrep='find . -maxdepth 10 -type f -iname "*.pm" | xargs grep --color'
+alias rmswp='find . -maxdepth 5 -type f -name "*.swp" | xargs rm -f'
+alias agrep='alias | grep --color -i'
+alias grep='grep --color -i'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# ------------------------------------------
+# Other directories & files commands
+# ------------------------------------------
+alias l='ls -1'
+alias ll='ls -1'
+alias lla='ls -lAh'
+alias lls='ls -lAhS'
+alias dudirs='du -hsx * | sort -rh | head -6'
+
+if ls --color > /dev/null 2>&1; then # GNU `ls`
+	colorflag="--color"
+else # OS X `ls`
+	colorflag="-G"
+fi
+
+# -----------------------------------
+# Compression & Archiving
+# -----------------------------------
+alias untgz='tar -zxvf'
+alias tgz='tar -zcvf'
+
+# -----------------------------------
+# File / memory analysis
+# -----------------------------------
+command -v hd > /dev/null || alias hd="hexdump -C"
+
+# -----------------------------------
+# Implicit bin + options
+# -----------------------------------
+alias rm='rm -i'
+
+# -----------------------------------
+# Exec name shortening aliases
+# -----------------------------------
+alias p='python'
+alias wee='weechat'
+
+# ------------------------------------
+# IP addresses
+# ------------------------------------
+alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias localip="ipconfig getifaddr en0"
+alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[0-9]\+\)\|[a-fA-F0-9:]\+\)' | awk '{ sub(/inet6? (addr:)? ?/, \"\"); print }'"
+
+# ------------------------------------
+# Networking
+# ------------------------------------
+alias td='tcpdump'
+alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
+alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
+alias dnsflush="sudo killall -HUP mDNSResponder"
+alias startnet='wpa_supplicant -B -D wext -i wlan0 -c /etc/wpa_supplicant.conf && dhclient wlan0'
+alias rffix='sudo rfkill unblock wifi; sudo rfkill unblock all'
+alias gpsds='gpsd /dev/ttyUSB0 -b -F /tmp/gpsd.pid'
+alias wireshark='/usr/bin/wireshark'
+alias td-hex-ascii='/usr/bin/tcpdump -XX -i'
+
+for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
+    #alias GET=lwp-request -m 'GET' ...
+	alias "$method"="lwp-request -m '$method'"
+done
+
+# ------------------------------------
+# Misc
+# ------------------------------------
+alias duckencode='java -jar ~/bin/duckencode.jar'
+alias dlmp3='youtube-dl --verbose -x --audio-format mp3'
+alias dlplaylist='youtube-dl --extract-audio --audio-format mp3 -o "%(title)s.%(ext)s"'
+alias ms='systemctl restart postgresql ; msfconsole'
+alias pdbg='perli -MDB::Color -d'
+
+# ------------------------------------
+# Hashcat
+# ------------------------------------
+alias hc='hashcat'
+alias genpass='dd if=/dev/urandom bs=1 count=32 2>/dev/null | base64 -w 0 | rev | cut -b 2- | rev'
+
+# ------------------------------------
+# Linux
+# ------------------------------------
+alias gita='git add'
+alias gitu='git fetch ; git merge origin/master'
+
+# ------------------------------------
+# Aptitude
+# ------------------------------------
+alias asearch='apt-cache search'
+alias ainstall='apt-get install'
+alias aupdate='apt-get update'
+alias aupgrade='apt-get upgrade'
+alias adistupgrade='apt-get dist-upgrade'
+
+# ------------------------------------
+# Android
+# ------------------------------------
+alias adb_backup='adb backup -apk -obb -shared -system -all -f'
+
+# ------------------------------------
+# OSSEC
+# ------------------------------------
+alias ossecc='/var/ossec/bin/ossec-control'
+alias ossec-start='/var/ossec/bin/ossec-control start'
+alias ossec-stop='/var/ossec/bin/ossec-control stop'
+
+# ------------------------------------
+# KeePassXC CLI
+# ------------------------------------
+alias kpcli='/usr/bin/keepassxc'
+alias dualmon="xrandr --output eDP1 --mode 1920x1080 --output DP1 --mode 3440x1440 --right-of eDP1"
+
+

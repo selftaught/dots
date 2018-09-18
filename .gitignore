@@ -1,0 +1,15 @@
+*.pyc
+.DS_Store
+Desktop.ini
+._*
+Thumbs.db
+.Spotlight-V100
+.Trashes
+openvpn*
+*.sw*
+*.log*
+github-tcpdump
+.weechat/logs
+.weechat/.weechat/logs
+.work
+.ssh

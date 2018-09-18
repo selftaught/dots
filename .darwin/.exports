@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+function export_cell_paths() {
+    for d in '/usr/local/Cellar/'; do
+        echo "$d"
+    done
+}
