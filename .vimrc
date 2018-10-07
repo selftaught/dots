@@ -30,6 +30,7 @@ set ttimeoutlen=0
 set backspace=2
 set bg=dark
 
+colorscheme solarized
 filetype plugin indent on
 syntax on
 

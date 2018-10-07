@@ -1,0 +1,21 @@
+# Basic options
+--recurse=yes
+--tag-relative=yes
+--exclude=.git
+
+# PHP
+--langmap=php:.engine.inc.module.theme.install.php --PHP-kinds=+cf-v
+--recurse
+--languages=PHP
+--exclude=.svn
+--exclude=.git
+--exclude="*/_*cache/*"
+--exclude="*/_*logs{0,1}/*"
+--exclude="*/_*data/*"
+--totals=yes
+--tag-relative=yes
+--PHP-kinds=+cf
+--regex-PHP=/abstract class ([^ ]*)/\1/c/
+--regex-PHP=/interface ([^ ]*)/\1/c/
+--regex-PHP=/trait ([^ ]*)/\1/c/
+--regex-PHP=/(public |static |abstract |protected |private )+ function +([^ \(]*)/\2/f/
