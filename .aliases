@@ -13,7 +13,7 @@ alias .....="cd ../../../.."
 # -----------------------------------
 alias h="history"
 alias rtfm='man'
-alias reload="exec $SHELL -l"
+alias reload="exec zsh -l"
 alias urldecode='python -c "import sys, urllib as ul; print ul.unquote_plus(sys.argv[1])"'
 alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 alias showinc='perl -e "use Data::Dumper; print Dumper(\@INC);"'
