@@ -34,6 +34,10 @@ colorscheme solarized
 filetype plugin indent on
 syntax on
 
+" Syntastic
+let g:syntastic_php_checkers=['php', 'phpcs']
+let g:syntastic_php_phpcs_args='--standard=PSR2 -n'
+
 " set leader to ,
 let mapleader=","
 let g:mapleader=","
@@ -64,6 +68,7 @@ set statusline=\ %{HasPaste()}%<%-15.25(%f%)%m%r%h\ %w\ \
 set statusline+=\ \ \ [%{&ff}/%Y]
 set statusline+=\ \ \ %<%20.30(%{hostname()}:%{CurDir()}%)\
 set statusline+=%=%-10.(%l,%c%V%)\ %p%%/%L
+set statusline+=%{SyntasticStatuslineFlag()}
 
 " auto reload vimrc when editing it
 autocmd! bufwritepost .vimrc source ~/.vimrc
