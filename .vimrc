@@ -54,6 +54,8 @@ cnoremap <C-K>      <C-U>
 map <C-t><C-t> :tabnew<CR>
 " close tab
 map <C-t><C-w> :tabclose<CR>
+" toggle tagbar
+nmap <F8> :TagbarToggle<CR>
 
 " automatically read a file that has been modified
 " and is open in vim
