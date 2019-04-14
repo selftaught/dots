@@ -23,7 +23,6 @@ set encoding=utf8
 set ffs=unix,dos,mac
 set foldmethod=indent
 set foldnestmax=10
-set nofoldenable
 set foldlevel=2
 set timeoutlen=1000
 set ttimeoutlen=0
@@ -33,10 +32,16 @@ filetype plugin indent on
 syntax on
 
 " Syntastic
-let g:syntastic_php_checkers=['php', 'phpcs']
-let g:syntastic_php_phpcs_args='--standard=PSR2 -n'
+"let g:syntastic_php_checkers=['php', 'phpcs']
+"let g:syntastic_php_phpcs_args='--standard=PSR2 -n'
 
-" set leader to ,
+" Airline Theme
+let g:airline_theme='solarized'
+" Airline theme
+let g:airline_solarized_bg='dark'
+
+
+" Set leader to ,
 let mapleader=","
 let g:mapleader=","
 
@@ -62,23 +67,13 @@ set autoread
 " cursor shows matching ) and }
 set showmatch
 
-" set status line
-set laststatus=2
-set statusline=\ %{HasPaste()}%<%-15.25(%f%)%m%r%h\ %w\ \
-set statusline+=\ \ \ [%{&ff}/%Y]
-set statusline+=\ \ \ %<%20.30(%{hostname()}:%{CurDir()}%)\
-set statusline+=%=%-10.(%l,%c%V%)\ %p%%/%L
-set statusline+=%{SyntasticStatuslineFlag()}
-
 " auto reload vimrc when editing it
 autocmd! bufwritepost .vimrc source ~/.vimrc
 
-" set the filetype to json for .json extension files
-autocmd! BufRead,BufNewFile *.json set filetype=json
-
-" make CSS omnicompletion work for SASS and SCSS
-autocmd BufNewFile,BufRead *.scss             set ft=scss.css
-autocmd BufNewFile,BufRead *.sass             set ft=sass.css
+autocmd! BufRead,BufNewFile *.json  set ft=json
+autocmd! BufRead,BufNewFile *.email set ft=tt2html
+autocmd! BufRead,BufNewFile *.html  set ft=tt2html
+autocmd! BufRead,BufNewFile *.s*ss  set ft=scss.css
 
 augroup json_autocmd
   autocmd!
@@ -147,7 +142,7 @@ endfunction
 
 function! HasPaste()
     if &paste
-        return '[PASTE]'
+        return '~ PASTE ~'
     else
         return ''
     endif
@@ -160,6 +155,11 @@ function! OpenPerlFile(module)
     execute "tabedit " . file
 endfunction
 
-au BufRead,BufNewFile *.email set filetype=tt2html
+" set status line
+set laststatus=2
+set statusline=\ %{HasPaste()}%<%-15.25(%f%)%m%r%h\ %w\ \
+set statusline+=\ \ \ [%{&ff}/%Y]
+set statusline+=\ \ \ %<%20.30(%{hostname()}:%{CurDir()}%)\
+set statusline+=%=%-10.(%l,%c%V%)\ %p%%/%L
 
 call pathogen#helptags()

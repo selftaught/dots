@@ -1,0 +1,15 @@
+[submodule ".vim/bundle/vim-polygot"]
+	path = .vim/bundle/vim-polygot
+	url = https://github.com/sheerun/vim-polyglot
+[submodule ".vim/bundle/vim-perl"]
+	path = .vim/bundle/vim-perl
+	url = https://github.com/vim-perl/vim-perl.git
+[submodule ".vim/bundle/vim-airline"]
+	path = .vim/bundle/vim-airline
+	url = https://github.com/vim-airline/vim-airline.git
+[submodule ".vim/bundle/perldoc-vim"]
+	path = .vim/bundle/perldoc-vim
+	url = https://github.com/hotchpotch/perldoc-vim
+[submodule ".vim/bundle/vim-airline-themes"]
+	path = .vim/bundle/vim-airline-themes
+	url = https://github.com/vim-airline/vim-airline-themes
