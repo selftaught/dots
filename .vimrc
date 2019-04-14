@@ -28,9 +28,7 @@ set foldlevel=2
 set timeoutlen=1000
 set ttimeoutlen=0
 set backspace=2
-set bg=dark
 
-colorscheme solarized
 filetype plugin indent on
 syntax on
 
@@ -161,5 +159,7 @@ function! OpenPerlFile(module)
     let file = substitute(file, "pod$", "pm", "")
     execute "tabedit " . file
 endfunction
+
+au BufRead,BufNewFile *.email set filetype=tt2html
 
 call pathogen#helptags()

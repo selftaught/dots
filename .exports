@@ -47,20 +47,5 @@ export PATH="$PATH:$HOME/bin:/sbin:/usr/sbin:/opt/local/bin:/opt/local/sbin"
 export PATH="$PATH:/var/ossec/bin/:/usr/local/go/bin:/opt/metasploit-framework/bin"
 export PATH="$PATH:$PERL5BASE/bin:/usr/local/Homebrew/bin"
 export PATH="$PATH:/usr/local/bin"
-
-# Cross compilation toolchain bin paths
-#export PATH=$PATH:~/bin/compilers/cross-compiler-sh4/bin
-#export PATH=$PATH:~/bin/compilers/cross-compiler-i686/bin
-#export PATH=$PATH:~/bin/compilers/cross-compiler-i586/bin
-#export PATH=$PATH:~/bin/compilers/cross-compiler-armv4l/bin
-#export PATH=$PATH:~/bin/compilers/cross-compiler-sparc/bin
-#export PATH=$PATH:~/bin/compilers/cross-compiler-powerpc/bin
-#export PATH=$PATH:~/bin/compilers/cross-compiler-armv5l/bin
-#export PATH=$PATH:~/bin/compilers/cross-compiler-m68k/bin
-#export PATH=$PATH:~/bin/compilers/cross-compiler-x86_64/bin
-#export PATH=$PATH:~/bin/compilers/cross-compiler-powerpc-440fp/bin
-#export PATH=$PATH:~/bin/compilers/cross-compiler-mips/bin
-#export PATH=$PATH:~/bin/compilers/cross-compiler-mipsel/bin
-
-#export TERM='xterm-256color'
+export PATH="$PATH:$HOME/.plenv/bin"
 
