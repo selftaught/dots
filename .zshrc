@@ -24,9 +24,7 @@ if [[ ! -z "$(which dircolors 2>/dev/null)" && -f "$HOME/.dircolors" ]]; then
     eval "$(dircolors $HOME/.dircolors)"
 fi
 
-if [[ -z "$(pgrep ssh-agent)" ]]; then
-#    eval "$(ssh-agent -s)"
-#    [[ -e $HOME/.ssh/id_rsa ]] && ssh-add $HOME/.ssh/id_rsa
-fi
+#$HOME/bin/start-work-ssh-agent.sh
 
 unset file;
+

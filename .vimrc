@@ -28,6 +28,7 @@ set timeoutlen=1000
 set ttimeoutlen=0
 set backspace=2
 
+colorscheme heroku-terminal
 filetype plugin indent on
 syntax on
 
@@ -36,9 +37,9 @@ syntax on
 "let g:syntastic_php_phpcs_args='--standard=PSR2 -n'
 
 " Airline Theme
-let g:airline_theme='solarized'
+"let g:airline_theme='solarized'
 " Airline theme
-let g:airline_solarized_bg='dark'
+"let g:airline_solarized_bg='dark'
 
 
 " Set leader to ,

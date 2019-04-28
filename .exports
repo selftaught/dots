@@ -45,7 +45,9 @@ export PERL_MB_OPT="--install_base $PERL5BASE"
 export PATH="$PATH:$GOPATH"
 export PATH="$PATH:$HOME/bin:/sbin:/usr/sbin:/opt/local/bin:/opt/local/sbin"
 export PATH="$PATH:/var/ossec/bin/:/usr/local/go/bin:/opt/metasploit-framework/bin"
-export PATH="$PATH:$PERL5BASE/bin:/usr/local/Homebrew/bin"
-export PATH="$PATH:/usr/local/bin"
+export PATH="$PATH:$PERL5BASE/bin"
 export PATH="$PATH:$HOME/.plenv/bin"
+
+export GDK_SCALE=2
+export BROWSER=/usr/bin/brave
 

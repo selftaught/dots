@@ -1,5 +1,9 @@
 #!/usr/bin/env sh
 
+function work_ssh_agent {
+    $HOME/bin/start-work-ssh-agent.sh
+}
+
 function strlen {
     echo ${#1}
 }
@@ -227,3 +231,8 @@ function randpw() {
 	< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-32};
 	echo;
 }
+
+function start_work_ssh_agent() {
+}
+
+
