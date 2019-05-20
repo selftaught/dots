@@ -23,12 +23,12 @@ set encoding=utf8
 set ffs=unix,dos,mac
 set foldmethod=indent
 set foldnestmax=10
-set foldlevel=2
+set foldlevel=10
 set timeoutlen=1000
 set ttimeoutlen=0
 set backspace=2
 
-colorscheme heroku-terminal
+"colorscheme heroku-terminal
 filetype plugin indent on
 syntax on
 
