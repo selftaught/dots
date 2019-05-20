@@ -1,22 +1,18 @@
 #!/usr/bin/env sh
 
-function work_ssh_agent {
-    $HOME/bin/start-work-ssh-agent.sh
-}
-
-function strlen {
+function void-strlen {
     echo ${#1}
 }
 
-function timestamp() {
+function void-timestamp() {
     date +"%T"
 }
 
-function mkd() {
+function void-mkd() {
 	mkdir -p "$@" && cd "$_";
 }
 
-function targz() {
+function void-tgz() {
 	local tmpFile="${@%/}.tar";
 	tar -cvf "${tmpFile}" --exclude=".DS_Store" "${@}" || return 1;
 
@@ -43,7 +39,7 @@ function targz() {
 	echo "${tmpFile}.gz created successfully.";
 }
 
-function fs() {
+function void-fs() {
 	if du -b /dev/null > /dev/null 2>&1; then
 		local arg=-sbh;
 	else
@@ -56,14 +52,7 @@ function fs() {
 	fi;
 }
 
-hash git &>/dev/null;
-if [ $? -eq 0 ]; then
-	function diff() {
-		git diff --no-index --color-words "$@";
-	}
-fi;
-
-function dataurl() {
+function void-dataurl() {
 	local mimeType=$(file -b --mime-type "$1");
 	if [[ $mimeType == text/* ]]; then
 		mimeType="${mimeType};charset=utf-8";
@@ -71,15 +60,7 @@ function dataurl() {
 	echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')";
 }
 
-function gitio() {
-	if [ -z "${1}" -o -z "${2}" ]; then
-		echo "Usage: \`gitio slug url\`";
-		return 1;
-	fi;
-	curl -i http://git.io/ -F "url=${2}" -F "code=${1}";
-}
-
-function server() {
+function void-py-server() {
 	local port="${1:-8000}";
 	sleep 1 && open "http://localhost:${port}/" &
 	# Set the default Content-Type to `text/plain` instead of `application/octet-stream`
@@ -87,14 +68,14 @@ function server() {
 	python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port";
 }
 
-function phpserver() {
+function void-php-server() {
 	local port="${1:-4000}";
 	local ip=$(ipconfig getifaddr en1);
 	sleep 1 && open "http://${ip}:${port}/" &
 	php -S "${ip}:${port}";
 }
 
-function gz() {
+function void-gz() {
 	local origsize=$(wc -c < "$1");
 	local gzipsize=$(gzip -c "$1" | wc -c);
 	local ratio=$(echo "$gzipsize * 100 / $origsize" | bc -l);
@@ -102,19 +83,11 @@ function gz() {
 	printf "gzip: %d bytes (%2.2f%%)\n" "$gzipsize" "$ratio";
 }
 
-function json() {
-	if [ -t 0 ]; then # argument
-		python -mjson.tool <<< "$*" | pygmentize -l javascript;
-	else # pipe
-		python -mjson.tool | pygmentize -l javascript;
-	fi;
-}
-
-function digga() {
+function void-digga() {
 	dig +nocmd "$1" any +multiline +noall +answer;
 }
 
-function escape() {
+function void-escape() {
 	printf "\\\x%s" $(printf "$@" | xxd -p -c1 -u);
 	# print a newline unless we’re piping the output to another program
 	if [ -t 1 ]; then
@@ -122,7 +95,7 @@ function escape() {
 	fi;
 }
 
-function unidecode() {
+function void-unidecode() {
 	perl -e "binmode(STDOUT, ':utf8'); print \"$@\"";
 	# print a newline unless we’re piping the output to another program
 	if [ -t 1 ]; then
@@ -130,15 +103,7 @@ function unidecode() {
 	fi;
 }
 
-function codepoint() {
-	perl -e "use utf8; print sprintf('U+%04X', ord(\"$@\"))";
-	# print a newline unless we’re piping the output to another program
-	if [ -t 1 ]; then
-		echo ""; # newline
-	fi;
-}
-
-function getcertnames() {
+function void-getcertnames() {
 	if [ -z "${1}" ]; then
 		echo "ERROR: No domain specified.";
 		return 1;
@@ -170,55 +135,31 @@ function getcertnames() {
 	fi;
 }
 
-function a() {
-	if [ $# -eq 0 ]; then
-		atom .;
-	else
-		atom "$@";
-	fi;
-}
-
-function v() {
-	if [ $# -eq 0 ]; then
-		vim .;
-	else
-		vim "$@";
-	fi;
-}
-
-function o() {
-	if [ $# -eq 0 ]; then
-		open .;
-	else
-		open "$@";
-	fi;
-}
-
-function tre() {
+function void-tre() {
 	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
 
-function lc {
+function void-lc {
     if [[ ! -z "$1" ]]; then
         perl -e "print lc('$1');"
     fi
 }
 
-function uc {
+function void-uc {
     if [[ ! -z "$1" ]]; then
         perl -e "print uc('$1');"
     fi
 }
 
-function sr {
+function void-sr {
     sudo service $1 restart
 }
 
-function showpath {
+function void-showpath {
     perl -e 'use Data::Dumper; my @paths = split(":", $ENV{"PATH"}); print Dumper(\@paths);'
 }
 
-function mount_luks {
+function void-mount-luks {
     DEVICE=$1
     DEVMAP=$2
     MNTDIR=$3
@@ -227,12 +168,7 @@ function mount_luks {
         mount /dev/mapper/$DEVMAP $MNTDIR
 }
 
-function randpw() {
-	< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-32};
+function void-randpw() {
+	< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-$1};
 	echo;
 }
-
-function start_work_ssh_agent() {
-}
-
-
