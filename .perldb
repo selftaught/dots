@@ -1,1 +1,0 @@
-use DB::Color sentinel => '.colorize'
