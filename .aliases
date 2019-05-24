@@ -5,8 +5,6 @@
 # -----------------------------------
 alias ..="cd .."
 alias ...="cd ../.."
-alias ....="cd ../../.."
-alias .....="cd ../../../.."
 
 # -----------------------------------
 # Misc
@@ -14,8 +12,6 @@ alias .....="cd ../../../.."
 alias h="history"
 alias rtfm='man'
 alias reload="exec zsh -l"
-alias urldecode='python -c "import sys, urllib as ul; print ul.unquote_plus(sys.argv[1])"'
-alias urlencode='python -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1]);"'
 alias showinc='perl -e "use Data::Dumper; print Dumper(\@INC);"'
 alias mkdur='mkdir'
 alias map="xargs -n1"
@@ -26,8 +22,6 @@ alias week='date +%V'
 # ----------------------------------
 alias j='jobs'
 alias ht='htop'
-alias s='screen'
-alias sls='screen -ls'
 
 # -----------------------------------
 # File searching
@@ -69,7 +63,7 @@ alias tgz='tar -zcvf'
 # -----------------------------------
 # File / memory analysis
 # -----------------------------------
-command -v hd > /dev/null || alias hd="hexdump -C"
+#command -v hd > /dev/null || alias hd="hexdump -C"
 
 # -----------------------------------
 # Implicit bin + options
@@ -94,8 +88,8 @@ alias ips="ifconfig -a | grep -o 'inet6\? \(addr:\)\?\s\?\(\(\([0-9]\+\.\)\{3\}[
 # ------------------------------------
 alias td='tcpdump'
 alias sniff="sudo ngrep -d 'en1' -t '^(GET|POST) ' 'tcp and port 80'"
-alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
-alias dnsflush="sudo killall -HUP mDNSResponder"
+alias httpdump="sudo tcpdump -i eth0 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET \/.*\""
+#alias dnsflush="sudo killall -HUP mDNSResponder"
 alias startnet='wpa_supplicant -B -D wext -i wlan0 -c /etc/wpa_supplicant.conf && dhclient wlan0'
 alias rffix='sudo rfkill unblock wifi; sudo rfkill unblock all'
 alias gpsds='gpsd /dev/ttyUSB0 -b -F /tmp/gpsd.pid'
@@ -120,13 +114,6 @@ alias pdbg='perli -MDB::Color -d'
 # Hashcat
 # ------------------------------------
 alias hc='hashcat'
-alias genpass='dd if=/dev/urandom bs=1 count=32 2>/dev/null | base64 -w 0 | rev | cut -b 2- | rev'
-
-# ------------------------------------
-# Linux
-# ------------------------------------
-alias gita='git add'
-alias gitu='git fetch ; git merge origin/master'
 
 # ------------------------------------
 # Aptitude
@@ -143,16 +130,8 @@ alias adistupgrade='apt-get dist-upgrade'
 alias adb_backup='adb backup -apk -obb -shared -system -all -f'
 
 # ------------------------------------
-# OSSEC
-# ------------------------------------
-alias ossecc='/var/ossec/bin/ossec-control'
-alias ossec-start='/var/ossec/bin/ossec-control start'
-alias ossec-stop='/var/ossec/bin/ossec-control stop'
-
-# ------------------------------------
 # KeePassXC CLI
 # ------------------------------------
 alias kpcli='/usr/bin/keepassxc'
-alias dualmon="xrandr --output eDP1 --mode 1920x1080 --output DP1 --mode 3440x1440 --right-of eDP1"
 
 
