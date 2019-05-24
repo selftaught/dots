@@ -29,7 +29,7 @@ sub help {
     say q{
 NAME
 
-   sync-helper
+   dotctl
 
 DESCRIPTION
 
@@ -37,7 +37,7 @@ DESCRIPTION
 
 SYNOPSIS
 
-    sync-helper [...option] [...value]
+    dotctl [...option] [...value]
 
 OPTIONS
 
@@ -46,6 +46,10 @@ OPTIONS
     -c,   --compare-checksum               compares the checksum of our dot files from the repo to the dots stored in $HOME
     -s2h, --sync-to-home                   sync dot files from the repository to $HOME
     -s2r, --sync-to-repo                   sync dot files from $HOME to the repository
+    -dac, --decrypt-all-sec                triggers decrypt prompt for all files in ./sec
+    -eac, --encrypt-all-sec                triggers encrypt prompt for all files in ./sec
+    -dec, --decrypt         <path>         trigger a prompt to decrypt a specific file
+    -enc, --encrypt         <path>         trigger a prompt to encrypt a specific file
 };
     exit;
 }
@@ -60,6 +64,10 @@ sub get_opts {
         'c|compare-checksums' => \$self->{'compare-checksums'},
         's2h|sync-to-home'    => \$self->{'sync-to-home'},
         's2r|sync-to-repo'    => \$self->{'sync-to-repo'},
+        'dac|decrypt-all-sec' => \$self->{'decrypt-all-sec'},
+        'eac|encrypt-all-sec' => \$self->{'encrypt-all-sec'},
+        'dec|decrypt=s'       => \$self->{'decrypt'},
+        'enc|encrypt=s'       => \$self->{'encrypt'},
     );
 }
 
@@ -82,6 +90,14 @@ sub run {
         $self->sync_to_home;
     } elsif ($self->{'sync-to-repo'}) {
         $self->sync_to_repo;
+    } elsif ($self->{'encrypt'}) {
+        $self->encrypt($self->get_password_input_prompt);
+    } elsif ($self->{'decrypt'}) {
+        $self->encrypt($self->get_password_input_prompt);
+    } elsif ($self->{'decrypt-all-sec'}) {
+        $self->decrypt_all_files_in_sec_dir($self->get_password_input_prompt);
+    } elsif ($self->{'encrpyt-all-sec'}) {
+        $self->encrypt_all_files_in_sec_dir($self->get_password_input_prompt);
     }
 
     return $self;
@@ -258,6 +274,22 @@ sub get_dot_md5_checksums {
         $sums->{$ent} = $hex_digest;
     }
     return $sums;
+}
+
+sub decrypt_all_files_in_sec_dir {
+    my ($self, $key) = @_;
+}
+
+sub encrypt_all_files_in_sec_dir {
+    my ($self, $key) = @_;
+}
+
+sub decrypt_file {
+    my ($self, $key) = @_;
+}
+
+sub encrypt_file {
+    my ($self, $key) = @_;
 }
 
 1;

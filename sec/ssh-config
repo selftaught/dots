@@ -1,0 +1,279 @@
+Host dhildebr
+    User dhildebr
+    IdentityFile ~/.ssh/employee-hosting-account
+    Hostname dhildebrand.bluehoststaff.com
+
+Host vps
+    User root
+    IdentitiesOnly yes
+    IdentityFile ~/.ssh/slamboozled-vps
+    Hostname 162.241.36.205
+
+Host kb-beta 13.58.243.28
+    Hostname 13.58.243.28
+    User mojoteam
+    IdentityFile ~/.ssh/dhildebrand-kb-beta-hosts
+    ForwardAgent yes
+
+Host *
+    User dhildebrand
+    ForwardAgent yes
+    IdentitiesOnly yes
+    IdentityFile ~/.ssh/bh
+
+Host alpha
+    Hostname main.dhildebrand.alpha.bluehost.com
+    ProxyCommand ssh -A -p 5190 dhildebrand@zz nc %h %p
+    ForwardAgent yes
+
+Host box101 box101.dhildebrand.alpha box101.dhildebrand.alpha.bluehost.com
+    Hostname box101.dhildebrand.alpha.bluehost.com
+    ProxyCommand ssh -q zz -W %h:%p
+
+Host zz zugzug.bluehost.com
+    Hostname zugzug.bluehost.com
+    Port 5190
+
+Host jump1 jump1.provo.unifiedlayer.com
+    Port 22
+    Hostname jump1.provo.unifiedlayer.com
+    IdentitiesOnly yes
+
+Host jump2 jump2.provo.unifiedlayer.com
+    Port 22
+    Hostname jump2.provo.unifiedlayer.com
+    IdentitiesOnly yes
+
+Host zz2 zugzug2.bluehost.com
+    Hostname zugzug2.bluehost.com
+    Port 5190
+
+Host zz3 zugzug3.unifiedlayer.com
+    Hostname zugzug3.unifiedlayer.com
+    Port 5190
+    ProxyCommand ssh -q zz2 -W %h:%p
+
+Host box102 box102.dhildebrand.alpha box102.dhildebrand.alpha.bluehost.com
+    Hostname box102.dhildebrand.alpha.bluehost.com
+    ProxyCommand ssh -q zz2 -W %h:%p
+
+Host i1beta i1.betabh.com
+    Hostname i1.betabh.com
+    ProxyCommand ssh -q zz2 -W %h:%p
+
+Host i2beta i2.betabh.com
+    Hostname i2.betabh.com
+    ProxyCommand ssh -q zz2 -W %h:%p
+
+Host i3beta i3.betabh.com
+    Hostname i3.betabh.com
+    ProxyCommand ssh -q zz2 -W %h:%p
+
+Host my1beta my1.betabh.com
+    Hostname my1.betabh.com
+    ProxyCommand ssh -q zz2 -W %h:%p
+
+Host my2beta my2.betabh.com
+    Hostname my2.betabh.com
+    ProxyCommand ssh -q zz2 -W %h:%p
+
+Host www1beta www1.betabh.com
+    Hostname www1.betabh.com
+    ProxyCommand ssh -q zz2 -W %h:%p
+
+Host www2beta www2.betabh.com
+    Hostname www2.betabh.com
+    ProxyCommand ssh -q zz2 -W %h:%p
+
+Host login1beta login1.betabh.com
+    Hostname login1.betabh.com
+    ProxyCommand ssh -q zz2 -W %h:%p
+
+Host login2beta login2.betabh.com
+    Hostname login2.betabh.com
+    ProxyCommand ssh -q zz2 -W %h:%p
+
+Host box301 box301.betabh.com
+    Hostname box301.betabh.com
+    ProxyCommand ssh -q zz2 -W %h:%p
+
+Host box303 box303.betabh.com
+    Hostname box303.betabh.com
+    ProxyCommand ssh -q zz2 -W %h:%p
+
+Host box304 box304.betabh.com
+    Hostname box304.betabh.com
+    ProxyCommand ssh -q zz2 -W %h:%p
+
+Host box231 box231.bluehost.com
+    Hostname box231.bluehost.com
+    ProxyCommand ssh -q zz2 -W %h:%p
+
+Host box536 box536.bluehost.com
+    Hostname box536.bluehost.com
+    ProxyCommand ssh -q zz2 -W %h:%p
+
+Host ji0 i0.justhost.com
+    Hostname i0.justhost.com
+    ProxyCommand ssh -q zz2 -W %h:%p
+
+Host i0 i0.bluehost.com
+    Hostname i0.bluehost.com
+    ProxyCommand ssh -q zz2 -W %h:%p
+
+Host my0 my0.bluehost.com
+    Hostname my0.bluehost.com
+    ProxyCommand ssh -q zz2 -W %h:%p
+
+Host loghost app-loghost
+    Hostname app-loghost.bluehost.com
+    ProxyCommand ssh -q zz2 -W %h:%p
+
+Host hal1beta hal1.beta.unifiedlayer.com
+    Hostname hal1.beta.unifiedlayer.com
+    ProxyCommand ssh -q zz2 -W %h:%p
+
+Host hal0 hal0.unifiedlayer.com
+    Hostname hal0.unifiedlayer.com
+    ProxyCommand ssh -q zz2 -W %h:%p
+
+Host *.mojo-themes.com
+    Port 2022
+    User dhildebrand
+
+Host *.mojomarketplace.com  *.prod
+    Port 2022
+    User dhildebrand
+
+Host 10.10.* 10.20.* 10.120.* 10.105.* 10.20.?.*
+#Host 10.10.* 10.20.* 10.120.* 10.105.* !10.20.?.*
+    Port 2022
+    User dhildebrand
+    IdentitiesOnly yes
+
+Host devvm* localvm* !*.localvagrant.xyz
+    Hostname %h.local.xyz
+    User vagrant
+    AddressFamily inet
+
+Host *.localvagrant.xyz
+    AddressFamily inet
+
+Host 10.10.10.*
+    ProxyCommand ssh -q -W %h:%p -p 2022 107.23.45.3
+    User dhildebrand
+    ForwardAgent yes
+    IdentityFile /home/thevoid/.ssh/mojo-aws
+
+Host 10.10.11.*
+    ProxyCommand ssh -l dhildebrand -W %h:%p -p 2022 50.112.162.194 # -i /home/thevoid/.ssh/mojo-aws
+    ForwardAgent yes
+    IdentityFile /home/thevoid/.ssh/mojo-aws
+
+Host 10.10.12.*
+    ProxyCommand ssh -l dhildebrand -W %h:%p -p 2022 sydney.mojo-themes.com
+    User dhildebrand
+    ForwardAgent yes
+    IdentityFile /home/thevoid/.ssh/mojo-aws
+
+Host *.prod
+    ProxyCommand ssh -l dhildebrand -W `echo %h | sed s/\\.prod$//`:%p mojo-vpn1
+    User dhildebrand
+    ForwardAgent yes
+    IdentityFile /home/thevoid/.ssh/mojo-aws
+
+Host 10.20.11.*
+    ProxyCommand ssh -l dhildebrand -W %h:%p mojo-vpn1
+    User dhildebrand
+    ForwardAgent yes
+    IdentityFile /home/thevoid/.ssh/mojo-aws
+
+Host 10.20.21.*
+    ProxyCommand ssh -l dhildebrand -W %h:%p mojo-vpn2
+    User dhildebrand
+    ForwardAgent yes
+    IdentityFile /home/thevoid/.ssh/mojo-aws
+
+Host 10.20.1.* 10.20.4.*
+    ProxyCommand ssh -l dhildebrand -W %h:%p mojo-vpn1
+    User dhildebrand
+    ForwardAgent yes
+    IdentityFile /home/thevoid/.ssh/mojo-aws
+
+Host 10.20.2.* 10.20.5.* 10.20.3.* 10.20.6.*
+    ProxyCommand ssh -l dhildebrand -W %h:%p mojo-vpn2
+    User dhildebrand
+    ForwardAgent yes
+    IdentityFile /home/thevoid/.ssh/mojo-aws
+
+Host 10.20.31.*
+    ProxyCommand ssh -l dhildebrand -W %h:%p mojo-vpn2
+    User dhildebrand
+    ForwardAgent yes
+    identityfile /home/thevoid/.ssh/mojo-aws
+
+Host 10.120.* *.stage
+    ProxyCommand ssh -l dhildebrand -W `echo %h | sed s/\\.stage$//`:%p -p 2022 mojo-vpnstage
+    User dhildebrand
+    ForwardAgent yes
+    IdentityFile /home/thevoid/.ssh/mojo-aws
+
+Host 10.105.11.*
+    ProxyCommand ssh -l dhildebrand -W %h:%p -p 2022 stage.mojo-themes.com
+    User dhildebrand
+    ForwardAgent yes
+
+Host 10.44.*
+    ProxyCommand ssh -l dhildebrand -W %h:%p -p 22 mojo-vpn-west1
+    User dhildebrand
+    ForwardAgent yes
+
+# Public end-points for use in proxy SSH and other
+# connections.  2 for production, one for staging.
+
+Host *.mojo-themes.com
+    Port 2022
+
+Host mojo-vpn1
+    Port 2022
+    User dhildebrand
+    ForwardAgent yes
+    HostName vpn-us-west-2a.mojomarketplace.com
+
+Host mojo-vpn2
+    Port 2022
+    User dhildebrand
+    ForwardAgent yes
+    HostName vpn-us-west-2c.mojomarketplace.com
+
+Host mojo-vpnstage
+    Port 2022
+    User dhildebrand
+    ForwardAgent yes
+    HostName staging.mojomarketplace.com
+
+Host ip-10-252-19-58.us-west-1.compute.internal
+    Port 2022
+    User dhildebrand
+    ForwardAgent yes
+    Hostname 54.215.10.98
+
+Host mojo-vpn-west1
+    Port 22
+    User dhildebrand
+    ForwardAgent yes
+    Hostname 54.193.40.195
+
+Host 10.30.0.72
+    Port 22
+    User dhildebrand
+    ForwardAgent yes
+    Hostname 54.213.34.96
+
+Host 10.40.0.175
+    Port 2022
+    User dhildebrand
+    ForwardAgent yes
+    Hostname 54.244.191.27
+
+
