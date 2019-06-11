@@ -115,6 +115,10 @@ sub sync_to_home {
 
         say sprintf "%s%sSyncing from repo -> home%s: %s", BOLD, BLUE, RESET, $dot;
 
+        if (-d $repo_path) {
+            say `rsync -avc $repo_path/ $home_path`;
+            next;
+        }
         my $ret = '';
 
         eval {
@@ -225,7 +229,7 @@ sub get_authoritative_dot_list {
 
     foreach my $ent (readdir(DIR)) {
         # Skip any entry that is '.', '..', or doesn't start with a period.
-        next if $ent =~ /^(?:(?:\.{1,2})|(?:[^.]).*)$/;
+	next if $ent eq '.' or $ent eq '..';
         push @list, $ent;
     }
 
@@ -252,18 +256,22 @@ sub get_dot_md5_checksums {
         my $abs_path = sprintf '%s/%s', $path, $ent;
         # Skip any entry that is '.', '..', or
         # doesn't start with a period.
-        if (!-e $abs_path ||
-             -d $abs_path) {
+        if (!-e $abs_path) {
             next;
         }
 
         my $hex_digest = eval {
-            open FILE, $abs_path or die "open($abs_path) failed: $!\n";
-            my $context = Digest::MD5->new;
-            $context->addfile(*FILE);
-            my $digest = $context->hexdigest;
-            close FILE;
-            return $digest;
+		if (-f $abs_path) {
+		    open FILE, $abs_path or die "open($abs_path) failed: $!\n";
+		    my $context = Digest::MD5->new;
+		    $context->addfile(*FILE);
+		    my $digest = $context->hexdigest;
+		    close FILE;
+		    return $digest;
+		}
+
+		# If the entry is a directory.
+		return Digest::MD5::md5_hex($abs_path);
         };
 
         if (my $error = $@) {
