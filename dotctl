@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-package Sync;
+package Dotctl;
 
 use strict;
 use warnings;
@@ -44,6 +44,7 @@ OPTIONS
     -h,   --help                           outputs this help information
     -f,   --force                          overrides user input prompts and assumes 'yes'
     -c,   --compare-checksum               compares the checksum of our dot files from the repo to the dots stored in $HOME
+    -d,   --diff                           show a diff between the dot files in ~ and .
     -s2h, --sync-to-home                   sync dot files from the repository to $HOME
     -s2r, --sync-to-repo                   sync dot files from $HOME to the repository
     -dac, --decrypt-all-sec                triggers decrypt prompt for all files in ./sec
@@ -84,7 +85,9 @@ sub pre_run {
 sub run {
     my $self = shift;
 
-    if ($self->{'compare-checksums'}) {
+    if ($self->{'diff'}) {
+        $self->compare_checksums;
+    } elsif ($self->{'compare-checksums'}) {
         $self->compare_checksums;
     } elsif ($self->{'sync-to-home'}) {
         $self->sync_to_home;
@@ -176,14 +179,14 @@ sub sync_to_repo {
         }
     }
 
-    say sprintf "\n%s%sDone%s!", BOLD, GREEN, RESET;
+    say sprintf "\n%s%sDONE%s!", BOLD, GREEN, RESET;
     exit;
 }
 
 sub validate_options {
     my $self = shift;
 
-    return if $self->{'compare-checksums'};
+    return if $self->{'compare-checksums'} || $self->{'diff'};
 
     if (!$self->{'sync-to-home'} &&
         !$self->{'sync-to-repo'}) {
@@ -201,7 +204,7 @@ sub compare_checksums {
         my $repo_path = sprintf '%s/%s', $self->{'repo-path'}, $dot;
 
         if (!-e $home_path) {
-            say sprintf '%-30s => %s%sMISSING%s', $home_path, BOLD, RED, RESET;
+            say sprintf '%-30s => %s%sREMOVED%s', $home_path, BOLD, RED, RESET;
             next;
         }
 
@@ -209,12 +212,12 @@ sub compare_checksums {
             say sprintf '%-30s => %s%sCHANGED%s', $home_path, BOLD, YELLOW, RESET;
 
             if ($self->{'diff'}) {
-                chomp(my $diff = `diff -u $repo_path $home_path`);
+                chomp(my $diff = `diff --color --unified $repo_path $home_path`);
                 say sprintf "\n%s%s%s\n", DARK, $diff, RESET;
             }
         }
         else {
-            say sprintf '%-30s => %s%sGOOD%s', $home_path, BOLD, BLUE, RESET;
+            say sprintf '%-30s => %s%sUNCHANGED%s', $home_path, BOLD, BLUE, RESET;
         }
     }
 }
@@ -228,8 +231,7 @@ sub get_authoritative_dot_list {
     }
 
     foreach my $ent (readdir(DIR)) {
-        # Skip any entry that is '.', '..', or doesn't start with a period.
-	next if $ent eq '.' or $ent eq '..';
+	    next if $self->is_an_ignored_entry($ent);
         push @list, $ent;
     }
 
@@ -254,8 +256,6 @@ sub get_dot_md5_checksums {
 
     foreach my $ent (@{$self->get_authoritative_dot_list}) {
         my $abs_path = sprintf '%s/%s', $path, $ent;
-        # Skip any entry that is '.', '..', or
-        # doesn't start with a period.
         if (!-e $abs_path) {
             next;
         }
@@ -281,7 +281,21 @@ sub get_dot_md5_checksums {
 
         $sums->{$ent} = $hex_digest;
     }
+
     return $sums;
+}
+
+sub is_an_ignored_entry {
+    my ($self, $name) = @_;
+    return 1 if !defined $name or !$name;
+    return 1 if $name eq '.';
+    return 1 if $name eq '..';
+    return 1 if $name eq 'sec';
+    return 1 if $name eq 'fonts';
+    return 1 if $name eq '.git';
+    return 1 if $name eq 'dotctl';
+    return 1 if $name eq '.ssh/known_hosts';
+    return 0;
 }
 
 sub decrypt_all_files_in_sec_dir {
@@ -302,5 +316,5 @@ sub encrypt_file {
 
 1;
 
-Sync->new->main;
+Dotctl->new->main;
 exit;
