@@ -32,8 +32,16 @@
 *color28: #EEE8D5
 *color29: #2F3D44
 
+Xft.dpi: 180
+Xft.autohint: 0
+Xft.lcdfilter:  lcddefault
+Xft.hintstyle:  hintfull
+Xft.hinting: 1
+Xft.antialias: 1
+Xft.rgba: rgb
+
 URxvt*termName:                   rxvt-unicode
-URxvt.font:                       xft:Source Code Pro:pixelsize=14
+URxvt.font:                       xft:Source Code Pro:pixelsize=18
 URxvt.depth:                      32
 URxvt*scrollBar:                  false
 
