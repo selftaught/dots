@@ -1,18 +1,18 @@
 #!/usr/bin/env sh
 
-function void-strlen {
+function strlen {
     echo ${#1}
 }
 
-function void-timestamp() {
+function timestamp() {
     date +"%T"
 }
 
-function void-mkd() {
+function mkd() {
 	mkdir -p "$@" && cd "$_";
 }
 
-function void-tgz() {
+function tgz() {
 	local tmpFile="${@%/}.tar";
 	tar -cvf "${tmpFile}" --exclude=".DS_Store" "${@}" || return 1;
 
@@ -39,7 +39,7 @@ function void-tgz() {
 	echo "${tmpFile}.gz created successfully.";
 }
 
-function void-fs() {
+function fs() {
 	if du -b /dev/null > /dev/null 2>&1; then
 		local arg=-sbh;
 	else
@@ -52,7 +52,7 @@ function void-fs() {
 	fi;
 }
 
-function void-dataurl() {
+function dataurl() {
 	local mimeType=$(file -b --mime-type "$1");
 	if [[ $mimeType == text/* ]]; then
 		mimeType="${mimeType};charset=utf-8";
@@ -60,7 +60,7 @@ function void-dataurl() {
 	echo "data:${mimeType};base64,$(openssl base64 -in "$1" | tr -d '\n')";
 }
 
-function void-py-server() {
+function py-server() {
 	local port="${1:-8000}";
 	sleep 1 && open "http://localhost:${port}/" &
 	# Set the default Content-Type to `text/plain` instead of `application/octet-stream`
@@ -68,14 +68,14 @@ function void-py-server() {
 	python -c $'import SimpleHTTPServer;\nmap = SimpleHTTPServer.SimpleHTTPRequestHandler.extensions_map;\nmap[""] = "text/plain";\nfor key, value in map.items():\n\tmap[key] = value + ";charset=UTF-8";\nSimpleHTTPServer.test();' "$port";
 }
 
-function void-php-server() {
+function php-server() {
 	local port="${1:-4000}";
 	local ip=$(ipconfig getifaddr en1);
 	sleep 1 && open "http://${ip}:${port}/" &
 	php -S "${ip}:${port}";
 }
 
-function void-gz() {
+function gz() {
 	local origsize=$(wc -c < "$1");
 	local gzipsize=$(gzip -c "$1" | wc -c);
 	local ratio=$(echo "$gzipsize * 100 / $origsize" | bc -l);
@@ -83,11 +83,11 @@ function void-gz() {
 	printf "gzip: %d bytes (%2.2f%%)\n" "$gzipsize" "$ratio";
 }
 
-function void-digga() {
+function digga() {
 	dig +nocmd "$1" any +multiline +noall +answer;
 }
 
-function void-escape() {
+function escape() {
 	printf "\\\x%s" $(printf "$@" | xxd -p -c1 -u);
 	# print a newline unless we’re piping the output to another program
 	if [ -t 1 ]; then
@@ -95,7 +95,7 @@ function void-escape() {
 	fi;
 }
 
-function void-unidecode() {
+function unidecode() {
 	perl -e "binmode(STDOUT, ':utf8'); print \"$@\"";
 	# print a newline unless we’re piping the output to another program
 	if [ -t 1 ]; then
@@ -103,7 +103,7 @@ function void-unidecode() {
 	fi;
 }
 
-function void-getcertnames() {
+function getcertnames() {
 	if [ -z "${1}" ]; then
 		echo "ERROR: No domain specified.";
 		return 1;
@@ -135,31 +135,31 @@ function void-getcertnames() {
 	fi;
 }
 
-function void-tre() {
+function tre() {
 	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
 
-function void-lc {
+function lc {
     if [[ ! -z "$1" ]]; then
         perl -e "print lc('$1');"
     fi
 }
 
-function void-uc {
+function uc {
     if [[ ! -z "$1" ]]; then
         perl -e "print uc('$1');"
     fi
 }
 
-function void-sr {
+function sr {
     sudo service $1 restart
 }
 
-function void-showpath {
+function showpath {
     perl -e 'use Data::Dumper; my @paths = split(":", $ENV{"PATH"}); print Dumper(\@paths);'
 }
 
-function void-mount-luks {
+function mount-luks {
     DEVICE=$1
     DEVMAP=$2
     MNTDIR=$3
@@ -168,7 +168,32 @@ function void-mount-luks {
         mount /dev/mapper/$DEVMAP $MNTDIR
 }
 
-function void-randpw() {
+function randpw() {
 	< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-$1};
 	echo;
 }
+
+function branches() {
+    ROOT_DIR=$1
+    [[ -z $ROOT_DIR ]] && ROOT_DIR=/var
+    find $ROOT_DIR -maxdepth 3 -type d -name '.git' 2>/dev/null | sed 's/.git//g' | xargs -I{} /bin/bash -c "printf '\e[90m%-60s\e[0m\e[92m' '{}: ' ; cd {} ; git status | grep 'On branch' | sed 's/On branch//'" ; echo "\e[0m"
+}
+
+# Stop all containers
+dstop() { docker stop $(docker ps -a -q); }
+
+# Remove all containers
+drm() { docker rm $(docker ps -a -q); }
+
+# Remove all images
+dri() { docker rmi $(docker images -q); }
+
+# Dockerfile build, e.g., $dbu tcnksm/test
+dbu() { docker build -t=$1 .; }
+
+# Show all alias related docker
+dalias() { alias | grep 'docker' | sed "s/^\([^=]*\)=\(.*\)/\1 => \2/"| sed "s/['|\']//g" | sort; }
+
+# Bash into running container
+dbash() { docker exec -it $(docker ps -aqf "name=$1") bash; }
+

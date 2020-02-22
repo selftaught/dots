@@ -212,8 +212,10 @@ sub compare_checksums {
             say sprintf '%-30s => %s%sCHANGED%s', $home_path, BOLD, YELLOW, RESET;
 
             if ($self->{'diff'}) {
-                chomp(my $diff = `diff --color --unified $repo_path $home_path`);
-                say sprintf "\n%s%s%s\n", DARK, $diff, RESET;
+                my $cmd = 'diff ' . ($^O eq 'darwin' ? ' -u' : '--color -u') . " $repo_path $home_path";
+                say $cmd;
+                chomp(my $diff = `$cmd | bat --pager never --color always -l diff`);
+                say "\n$diff\n";
             }
         }
         else {
