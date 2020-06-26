@@ -212,7 +212,7 @@ sub compare_checksums {
             say sprintf '%-30s => %s%sCHANGED%s', $home_path, BOLD, YELLOW, RESET;
 
             if ($self->{'diff'}) {
-                my $cmd = 'diff ' . ($^O eq 'darwin' ? ' -u' : '--color -u') . " $repo_path $home_path";
+                my $cmd = 'diff ' . ($^O eq 'darwin' ? ' -u' : '--color -u') . " $home_path $repo_path";
                 say $cmd;
                 chomp(my $diff = `$cmd | bat --pager never --color always -l diff`);
                 say "\n$diff\n";

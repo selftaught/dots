@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 function strlen {
-    echo ${#1}
+    perl -e "print strlen q{$1} || ''"
 }
 
 function timestamp() {
