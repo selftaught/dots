@@ -46,6 +46,7 @@ alias l='ls -1'
 alias ll='ls -1'
 alias lla='ls -lAh'
 alias lls='ls -lAhS'
+alias ls='ls -lh'
 alias dudirs='du -hsx * | sort -rh | head -6'
 
 if ls --color > /dev/null 2>&1; then # GNU `ls`
@@ -168,4 +169,4 @@ alias dex="docker exec -i -t"
 alias drmf='docker stop $(docker ps -a -q) && docker rm $(docker ps -a -q)'
 
 alias dockeraliases='alias | grep docker | grep -v dockeraliases'
-
+alias dc='cd'
