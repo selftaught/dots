@@ -218,9 +218,6 @@ sub compare_checksums {
                 say "\n$diff\n";
             }
         }
-        else {
-            say sprintf '%-30s => %s%sUNCHANGED%s', $home_path, BOLD, BLUE, RESET;
-        }
     }
 }
 
@@ -298,22 +295,6 @@ sub is_an_ignored_entry {
     return 1 if $name eq 'dotctl';
     return 1 if $name eq '.ssh/known_hosts';
     return 0;
-}
-
-sub decrypt_all_files_in_sec_dir {
-    my ($self, $key) = @_;
-}
-
-sub encrypt_all_files_in_sec_dir {
-    my ($self, $key) = @_;
-}
-
-sub decrypt_file {
-    my ($self, $key) = @_;
-}
-
-sub encrypt_file {
-    my ($self, $key) = @_;
 }
 
 1;
