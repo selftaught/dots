@@ -185,7 +185,7 @@
 [merge]
         tool = vimdiff
 [user]
-        name  = "Dillan Hildebrand"
-        email = "dillan.hildebrand@protonmail.com"
+        name  = ""
+        email = ""
 [core]
         excludesfile = ~/.gitignore_global
