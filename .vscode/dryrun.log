@@ -1,0 +1,6 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory `/Users/dhildebrand/Personal/Repos/dots'
+make: Leaving directory `/Users/dhildebrand/Personal/Repos/dots'
+ 
+make: *** No targets.  Stop.
+
