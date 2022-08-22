@@ -42,3 +42,5 @@ export PERL_MM_OPT="INSTALL_BASE=$PERL5BASE"
 export PERL_MB_OPT="--install_base $PERL5BASE"
 
 #export BROWSER=/usr/bin/brave
+
+export CLICOLOR=1
