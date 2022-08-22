@@ -230,7 +230,7 @@ sub get_authoritative_dot_list {
     }
 
     foreach my $ent (readdir(DIR)) {
-	    next if $self->is_an_ignored_entry($ent);
+        next if $ent =~ /^\.{1,2}$/;
         push @list, $ent;
     }
 
