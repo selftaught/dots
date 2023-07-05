@@ -155,7 +155,7 @@ function sr {
     sudo service $1 restart
 }
 
-function showpath {
+function dumppath {
     perl -e 'use Data::Dumper; my @paths = split(":", $ENV{"PATH"}); print Dumper(\@paths);'
 }
 
@@ -171,12 +171,6 @@ function mount-luks {
 function randpw() {
 	< /dev/urandom tr -dc _A-Z-a-z-0-9 | head -c${1:-$1};
 	echo;
-}
-
-function branches() {
-    ROOT_DIR=$1
-    [[ -z $ROOT_DIR ]] && ROOT_DIR=/var
-    find $ROOT_DIR -maxdepth 3 -type d -name '.git' 2>/dev/null | sed 's/.git//g' | xargs -I{} /bin/bash -c "printf '\e[90m%-60s\e[0m\e[92m' '{}: ' ; cd {} ; git status | grep 'On branch' | sed 's/On branch//'" ; echo "\e[0m"
 }
 
 # Stop all containers
